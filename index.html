@@ -1,0 +1,417 @@
+<html><head><base href="cocktails.html/index.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קוקטיילמניה - התאמה אישית של קוקטיילים מכל העולם</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap');
+    
+    :root {
+        --primary-color: #FF6B6B;
+        --secondary-color: #4ECDC4;
+        --accent-color: #FFD93D;
+        --text-color: #2C3E50;
+        --bg-color: rgba(247, 249, 252, 0.8);
+    }
+    
+    body {
+        font-family: 'Heebo', sans-serif;
+        background: url('https://cocktailmania.com/images/thailand-beach-background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: var(--text-color);
+        direction: rtl;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .header {
+        background: linear-gradient(135deg, rgba(255,107,107,0.8), rgba(78,205,196,0.8));
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    .header h1 {
+        margin: 0;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+    
+    .selection-card, .recipe-card, .cocktail-list {
+        background-color: var(--bg-color);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    h2 {
+        color: var(--primary-color);
+        margin-bottom: 30px;
+    }
+    
+    .selection-group {
+        margin-bottom: 30px;
+    }
+    
+    .selection-group h3 {
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+    }
+    
+    .options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+    
+    .option {
+        background-color: white;
+        border: 2px solid var(--secondary-color);
+        border-radius: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .option:hover, .option.selected {
+        background-color: var(--secondary-color);
+        color: white;
+        transform: translateY(-5px);
+    }
+    
+    .submit-btn {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+    
+    .submit-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .recipe-card {
+        text-align: right;
+    }
+    
+    .recipe-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+    
+    .recipe-card p {
+        margin-bottom: 15px;
+    }
+    
+    .recipe-card ul {
+        padding-right: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .recipe-card .origin {
+        font-style: italic;
+        color: var(--secondary-color);
+    }
+    
+    .cocktail-list {
+        display: none;
+        text-align: right;
+    }
+    
+    .cocktail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid var(--secondary-color);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .cocktail-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .cocktail-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-left: 20px;
+    }
+    
+    .cocktail-details {
+        flex: 1;
+    }
+    
+    .cocktail-details h4 {
+        color: var(--primary-color);
+        margin-bottom: 5px;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .selection-card, .recipe-card, .cocktail-list {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+</style>
+</head>
+<body>
+    <header class="header">
+        <h1>קוקטיילמניה - קוקטיילים מכל העולם</h1>
+    </header>
+    
+    <div class="container">
+        <div class="selection-card">
+            <h2>בחרו את סוג הקוקטייל המועדף עליכם</h2>
+            
+            <div class="selection-group">
+                <h3>קוקטייל על בסיס קפה או טעמי פירות</h3>
+                <div class="options" id="base-options">
+                    <div class="option" data-value="coffee">קפה</div>
+                    <div class="option" data-value="fruit">פירות</div>
+                </div>
+            </div>
+            
+            <div class="selection-group" id="fruit-group" style="display: none;">
+                <h3>בחרו טעם פרי</h3>
+                <div class="options" id="fruit-options">
+                    <div class="option" data-value="mango">מנגו</div>
+                    <div class="option" data-value="lychee">ליצ'י</div>
+                    <div class="option" data-value="grapes">ענבים</div>
+                    <div class="option" data-value="watermelon">אבטיח</div>
+                    <div class="option" data-value="coconut">קוקוס</div>
+                    <div class="option" data-value="pineapple">אננס</div>
+                    <div class="option" data-value="strawberry">תות</div>
+                    <div class="option" data-value="passionfruit">פסיפלורה</div>
+                    <div class="option" data-value="melon">מלון</div>
+                </div>
+            </div>
+            
+            <button class="submit-btn" id="submit-btn">הצג קוקטיילים מתאימים</button>
+        </div>
+        
+        <div class="cocktail-list" id="cocktail-list">
+            <h3>קוקטיילים מומלצים:</h3>
+            <!-- Cocktail items will be dynamically added here -->
+        </div>
+        
+        <div class="recipe-card" id="recipe-card" style="display:none;">
+            <h3 id="cocktail-name"></h3>
+            <p id="cocktail-description"></p>
+            <h4>מרכיבים:</h4>
+            <ul id="cocktail-ingredients"></ul>
+            <h4>הוראות הכנה:</h4>
+            <p id="cocktail-instructions"></p>
+            <h4>מתכון מדויק:</h4>
+            <p id="cocktail-exact-recipe"></p>
+            <p class="origin" id="cocktail-origin"></p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const baseOptions = document.querySelectorAll('#base-options .option');
+        const fruitOptions = document.querySelectorAll('#fruit-options .option');
+        const fruitGroup = document.getElementById('fruit-group');
+        const submitBtn = document.getElementById('submit-btn');
+        const recipeCard = document.getElementById('recipe-card');
+        const cocktailList = document.getElementById('cocktail-list');
+        
+        let selectedBase = '';
+        let selectedFruit = '';
+        
+        const cocktailRecipes = {
+            coffee: [
+                {
+                    name: "אספרסו מרטיני",
+                    description: "קוקטייל קפה קלאסי עם טוויסט מודרני",
+                    ingredients: [
+                        "60 מ\"ל וודקה",
+                        "30 מ\"ל ליקר קפה",
+                        "30 מ\"ל אספרסו טרי",
+                        "15 מ\"ל סירופ סוכר",
+                        "3 פולי קפה לקישוט"
+                    ],
+                    instructions: "ערבבו את כל המרכיבים (למעט פולי הקפה) בשייקר עם קרח. נערו היטב ומסננו לתוך כוס מרטיני מקוררת. קשטו עם פולי הקפה.",
+                    exactRecipe: "בשייקר, הוסיפו 60 מ\"ל וודקה, 30 מ\"ל ליקר קפה, 30 מ\"ל אספרסו טרי ו-15 מ\"ל סירופ סוכר. מלאו את השייקר בקרח ונערו היטב למשך 10-15 שניות. סננו לתוך כוס מרטיני מקוררת והניחו 3 פולי קפה על פני המשקה לקישוט.",
+                    origin: "נוצר בסוף שנות ה-80 בלונדון, אנגליה.",
+                    image: "https://cocktailmania.com/images/espresso-martini.jpg"
+                },
+                {
+                    name: "אייריש קופי",
+                    description: "קוקטייל חם וקלאסי המשלב קפה וויסקי אירי",
+                    ingredients: [
+                        "180 מ\"ל קפה חם",
+                        "45 מ\"ל ויסקי אירי",
+                        "30 מ\"ל קרם שמנת מתוקה",
+                        "1 כפית סוכר חום"
+                    ],
+                    instructions: "חממו כוס זכוכית עם מים חמים. רוקנו ומזגו את הקפה והויסקי. הוסיפו סוכר וערבבו. מזגו בעדינות את הקרם מעל בעזרת כף.",
+                    exactRecipe: "חממו כוס זכוכית בנפח של 240 מ\"ל עם מים חמים. רוקנו את המים ומזגו 180 מ\"ל קפה חם לכוס. הוסיפו 45 מ\"ל ויסקי אירי ו-1 כפית סוכר חום. ערבבו עד שהסוכר נמס לחלוטין. בעזרת כף, מזגו בעדינות 30 מ\"ל קרם שמנת מתוקה על גבי הקפה כך שהקרם יצוף מעל.",
+                    origin: "נוצר בשדה התעופה של שאנון, אירלנד, בשנות ה-40.",
+                    image: "https://cocktailmania.com/images/irish-coffee.jpg"
+                }
+            ],
+            mango: [
+                {
+                    name: "מנגו טנגו",
+                    description: "קוקטייל טרופי מרענן עם טעם מנגו עשיר",
+                    ingredients: [
+                        "60 מ\"ל רום לבן",
+                        "90 מ\"ל מיץ מנגו טרי",
+                        "15 מ\"ל מיץ ליים",
+                        "15 מ\"ל סירופ אגבה",
+                        "קרח כתוש",
+                        "פלח מנגו לקישוט"
+                    ],
+                    instructions: "מלאו כוס גבוהה בקרח כתוש. הוסיפו את כל המרכיבים הנוזליים לשייקר עם קרח, נערו היטב ומזגו לכוס. קשטו עם פלח מנגו.",
+                    exactRecipe: "בשייקר, הוסיפו 60 מ\"ל רום לבן, 90 מ\"ל מיץ מנגו טרי, 15 מ\"ל מיץ ליים טרי, ו-15 מ\"ל סירופ אגבה. מלאו את השייקר בקרח ונערו היטב למשך 10-15 שניות. מלאו כוס גבוהה בקרח כתוש. סננו את תכולת השייקר לתוך הכוס. קשטו עם פלח מנגו טרי על שפת הכוס.",
+                    origin: "התפתח מתרבות הטיקי של שנות ה-50 בקליפורניה, ארה\"ב.",
+                    image: "https://cocktailmania.com/images/mango-tango.jpg"
+                },
+                {
+                    name: "מנגו מוחיטו",
+                    description: "גרסה טרופית לקוקטייל הקובני הקלאסי",
+                    ingredients: [
+                        "60 מ\"ל רום לבן",
+                        "30 מ\"ל מחית מנגו",
+                        "15 מ\"ל מיץ ליים",
+                        "8-10 עלי נענע",
+                        "15 מ\"ל סירופ סוכר",
+                        "סודה",
+                        "קרח"
+                    ],
+                    instructions: "כתשו את עלי הנענע עם סירופ הסוכר בתחתית הכוס. הוסיפו קרח, רום, מחית מנגו ומיץ ליים. ערבבו היטב והשלימו עם סודה. קשטו בעלי נענע ופלח מנגו.",
+                    exactRecipe: "בכוס גבוהה, הניחו 8-10 עלי נענע ו-15 מ\"ל סירופ סוכר. כתשו בעדינות את העלים עם מועך. הוסיפו 60 מ\"ל רום לבן, 30 מ\"ל מחית מנגו, ו-15 מ\"ל מיץ ליים טרי. מלאו את הכוס בקרח כתוש ובחשו היטב. השלימו עם סודה עד לשפת הכוס (בערך 60 מ\"ל). ערבבו בעדינות וקשטו עם ענף נענע טרי ופלח מנגו.",
+                    origin: "וריאציה מודרנית על המוחיטו המסורתי מקובה.",
+                    image: "https://cocktailmania.com/images/mango-mojito.jpg"
+                }
+            ],
+            // Add more recipes for other fruits here
+        };
+        
+        function selectOption(options, clickedOption) {
+            options.forEach(option => option.classList.remove('selected'));
+            clickedOption.classList.add('selected');
+            return clickedOption.dataset.value;
+        }
+        
+        baseOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                selectedBase = selectOption(baseOptions, this);
+                if (selectedBase === 'fruit') {
+                    fruitGroup.style.display = 'block';
+                } else {
+                    fruitGroup.style.display = 'none';
+                    selectedFruit = '';
+                }
+            });
+        });
+        
+        fruitOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                selectedFruit = selectOption(fruitOptions, this);
+            });
+        });
+        
+        submitBtn.addEventListener('click', function() {
+            if (selectedBase) {
+                if (selectedBase === 'fruit' && !selectedFruit) {
+                    alert('בבקשה בחרו טעם פרי לפני היצירה.');
+                } else {
+                    displayCocktailList(selectedBase === 'coffee' ? 'coffee' : selectedFruit);
+                }
+            } else {
+                alert('בבקשה בחרו סוג קוקטייל (קפה או פירות) לפני היצירה.');
+            }
+        });
+        
+        function displayCocktailList(cocktailType) {
+            const cocktails = cocktailRecipes[cocktailType];
+            if (cocktails && cocktails.length > 0) {
+                cocktailList.innerHTML = '<h3>קוקטיילים מומלצים:</h3>';
+                cocktails.forEach((cocktail, index) => {
+                    const cocktailItem = document.createElement('div');
+                    cocktailItem.className = 'cocktail-item';
+                    cocktailItem.innerHTML = `
+                        <img src="${cocktail.image}" alt="${cocktail.name}" class="cocktail-image">
+                        <div class="cocktail-details">
+                            <h4>${cocktail.name}</h4>
+                            <p>${cocktail.description}</p>
+                        </div>
+                    `;
+                    cocktailItem.addEventListener('click', () => displayRecipe(cocktailType, index));
+                    cocktailList.appendChild(cocktailItem);
+                });
+                cocktailList.style.display = 'block';
+                recipeCard.style.display = 'none';
+            } else {
+                alert('לא נמצאו קוקטיילים מתאימים. אנא נסו שוב.');
+            }
+        }
+        
+        function displayRecipe(cocktailType, index) {
+            const recipe = cocktailRecipes[cocktailType][index];
+            if (recipe) {
+                document.getElementById('cocktail-name').textContent = recipe.name;
+                document.getElementById('cocktail-description').textContent = recipe.description;
+                const ingredientsList = document.getElementById('cocktail-ingredients');
+                ingredientsList.innerHTML = '';
+                recipe.ingredients.forEach(ingredient => {
+                    const li = document.createElement('li');
+                    li.textContent = ingredient;
+                    ingredientsList.appendChild(li);
+                });
+                document.getElementById('cocktail-instructions').textContent = recipe.instructions;
+                document.getElementById('cocktail-exact-recipe').textContent = recipe.exactRecipe;
+                document.getElementById('cocktail-origin').textContent = recipe.origin;
+                recipeCard.style.display = 'block';
+                cocktailList.style.display = 'none';
+            } else {
+                alert('מתכון לא נמצא. אנא נסו שוב.');
+            }
+        }
+        
+        // Add hover effects
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => {
+            option.addEventListener('mouseover', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'scale(1.05) translateY(-5px)';
+                }
+            });
+            option.addEventListener('mouseout', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'scale(1) translateY(0)';
+                }
+            });
+        });
+    });
+    </script>
+</body></html>
