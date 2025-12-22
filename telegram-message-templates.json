@@ -1,0 +1,142 @@
+{
+  "improved_telegram_messages": {
+    "main_message_v1": {
+      "description": "הודעה מעוצבת עם קווים וסמלים",
+      "text": "╔═══════════════════════════╗\n║   📧 מייל חדש מ-{{56.vendor}}   ║\n╚═══════════════════════════╝\n\n👤 לקוח: *{{ifempty(49.fullName; 56.customer_name)}}*\n🆔 ת.ז: `{{56.customer_id}}`\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n📦 מוצר: {{56.product}}\n🏢 יצרן: {{56.vendor}}\n📋 קטגוריה: {{56.process_category}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n📝 תקציר:\n{{56.summary}}\n\n📎 קבצים: {{56.attachments}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n⏰ זמן קבלה: {{formatDate(now; \"DD/MM/YYYY HH:mm\")}}",
+      "parse_mode": "Markdown"
+    },
+
+    "main_message_v2": {
+      "description": "הודעה מינימליסטית עם אימוג'ים בולטים",
+      "text": "🔔 *מייל חדש התקבל*\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n*פרטי הלקוח:*\n👤 {{ifempty(49.fullName; 56.customer_name)}}\n🆔 {{56.customer_id}}\n\n*פרטי הפנייה:*\n📦 {{56.product}} • 🏢 {{56.vendor}}\n📋 {{56.process_category}}\n\n*תקציר:*\n💬 {{56.summary}}\n\n📎 {{if(length(56.attachments) > 0; \"קבצים מצורפים: \" + 56.attachments; \"אין קבצים מצורפים\")}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n🕐 {{formatDate(now; \"DD/MM/YYYY בשעה HH:mm\")}}",
+      "parse_mode": "Markdown"
+    },
+
+    "main_message_v3": {
+      "description": "הודעה עם רקע צבעוני (background)",
+      "text": "🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦\n\n        📧 *מייל חדש*        \n\n🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦\n\n*פרטי לקוח:*\n┣━ 👤 שם: {{ifempty(49.fullName; 56.customer_name)}}\n┣━ 🆔 ת.ז: {{56.customer_id}}\n┗━ 📞 טלפון: {{49.cellNumber}}\n\n*מידע תפעולי:*\n┣━ 📦 מוצר: {{56.product}}\n┣━ 🏢 יצרן: {{56.vendor}}\n┣━ 📋 קטגוריה: {{56.process_category}}\n┗━ 📎 קבצים: {{56.attachments}}\n\n*תוכן המייל:*\n💬 {{56.summary}}\n\n*נושא:* {{56.topic}}\n\n⏰ נשלח ב: {{formatDate(now; \"DD/MM/YYYY HH:mm\")}}\n\n━━━━━━━━━━━━━━━━━━━━━━━",
+      "parse_mode": "Markdown"
+    },
+
+    "compact_message": {
+      "description": "הודעה קומפקטית לשימוש מהיר",
+      "text": "📧 *מייל מ-{{56.vendor}}*\n\n👤 {{ifempty(49.fullName; 56.customer_name)}} ({{56.customer_id}})\n📋 {{56.process_category}} • {{56.product}}\n💬 {{56.summary}}\n\n⏰ {{formatDate(now; \"HH:mm\")}}",
+      "parse_mode": "Markdown"
+    },
+
+    "detailed_message_with_workflows": {
+      "description": "הודעה מפורטת עם תהליכים קיימים",
+      "text": "╔════════════════════════════╗\n║  📧 *ניתוח מייל אוטומטי*  ║\n╚════════════════════════════╝\n\n*🔍 זיהוי לקוח:*\n{{if(length(49.fullName) > 0; \"✅ נמצא במערכת\"; \"⚠️ לא נמצא במערכת\")}}\n👤 שם: {{ifempty(49.fullName; 56.customer_name)}}\n🆔 ת.ז: {{56.customer_id}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n*📋 פרטי הפנייה:*\n🏢 יצרן: {{56.vendor}}\n📦 מוצר: {{56.product}}\n🏷️ קטגוריה: {{56.process_category}}\n📌 נושא: {{56.topic}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n*📝 תקציר המייל:*\n{{56.summary}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n*🔗 תהליכים קיימים:*\n{{if(length(174.array) > 0; \"נמצאו \" + length(174.array) + \" תהליכים פתוחים\"; \"אין תהליכים פתוחים\")}}\n\n*💡 המלצה:*\n{{163.result.selected_title}}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n📎 קבצים: {{56.attachments}}\n⏰ זמן: {{formatDate(now; \"DD/MM/YYYY HH:mm\")}}",
+      "parse_mode": "Markdown"
+    }
+  },
+
+  "button_templates": {
+    "modern_buttons": {
+      "description": "כפתורים מודרניים עם אימוג'ים",
+      "format": "[\n  [{\"text\": \"📋 {{168.typeName}}\", \"callback_data\": \"header_{{168.typeId}}\"}],\n  [{\"text\": \"🔹 נוכחי: {{168.statusName}}\", \"callback_data\": \"current_status\"}],\n  [{\"text\": \"✨ המלצה: {{163.result.selected_title}}\", \"callback_data\": \"{{168.number}}|{{163.result.selected_id}}\"}],\n  [{\"text\": \"━━━━━━━━━━━━━━━━━━━\", \"callback_data\": \"sep\"}],\n  [\n    {\"text\": \"✅ אשר\", \"callback_data\": \"approve_{{168.id}}\"},\n    {\"text\": \"✏️ ערוך\", \"callback_data\": \"edit_{{168.id}}\"},\n    {\"text\": \"❌ בטל\", \"callback_data\": \"cancel\"}\n  ],\n  [\n    {\"text\": \"ℹ️ פרטים\", \"callback_data\": \"details_{{168.id}}\"},\n    {\"text\": \"📎 מסמכים\", \"callback_data\": \"docs_{{168.id}}\"}\n  ]\n]"
+    },
+
+    "quick_action_buttons": {
+      "description": "כפתורי פעולה מהירה",
+      "format": "[\n  [{\"text\": \"🚀 פעולות מהירות\", \"callback_data\": \"quick_menu\"}],\n  [\n    {\"text\": \"📤 שלח ליצרן\", \"callback_data\": \"send_vendor_{{168.id}}\"},\n    {\"text\": \"📞 התקשר\", \"callback_data\": \"call_{{49.id}}\"}\n  ],\n  [\n    {\"text\": \"📧 מייל ללקוח\", \"callback_data\": \"email_customer_{{49.id}}\"},\n    {\"text\": \"📝 הוסף הערה\", \"callback_data\": \"add_note_{{168.id}}\"}\n  ]\n]"
+    },
+
+    "status_update_buttons": {
+      "description": "כפתורים לעדכון סטטוס עם צבעים",
+      "format": "[\n  [{\"text\": \"🟢 אושר - עדכן לסטטוס הבא\", \"callback_data\": \"approve_next_{{168.id}}\"}],\n  [{\"text\": \"🟡 דורש תשומת לב\", \"callback_data\": \"attention_{{168.id}}\"}],\n  [{\"text\": \"🔴 דחה ושלח ללקוח\", \"callback_data\": \"reject_notify_{{168.id}}\"}],\n  [{\"text\": \"⚪ ביטול - אין פעולה\", \"callback_data\": \"cancel\"}]\n]"
+    },
+
+    "workflow_navigation_buttons": {
+      "description": "כפתורי ניווט בין תהליכים",
+      "format": "[\n  [{\"text\": \"⬅️ תהליך קודם\", \"callback_data\": \"prev_workflow\"}, {\"text\": \"➡️ תהליך הבא\", \"callback_data\": \"next_workflow\"}],\n  [{\"text\": \"📊 כל התהליכים ({{length(174.array)}})\", \"callback_data\": \"all_workflows\"}],\n  [{\"text\": \"🏠 חזרה לתפריט\", \"callback_data\": \"main_menu\"}]\n]"
+    },
+
+    "category_based_buttons": {
+      "description": "כפתורים לפי קטגוריה",
+      "conditions": {
+        "תביעה": "[\n  [{\"text\": \"💉 מסמכים רפואיים\", \"callback_data\": \"medical_docs_{{168.id}}\"}],\n  [{\"text\": \"✅ אשר תביעה\", \"callback_data\": \"approve_claim_{{168.id}}\"}],\n  [{\"text\": \"❌ דחה תביעה\", \"callback_data\": \"reject_claim_{{168.id}}\"}]\n]",
+        "מינוי_סוכן": "[\n  [{\"text\": \"📝 טפסים חתומים\", \"callback_data\": \"signed_forms_{{168.id}}\"}],\n  [{\"text\": \"📤 שלח ליצרן\", \"callback_data\": \"send_vendor_{{168.id}}\"}],\n  [{\"text\": \"📋 עדכן סטטוס\", \"callback_data\": \"update_status_{{168.id}}\"}]\n]",
+        "פדיון": "[\n  [{\"text\": \"💰 פרטי פדיון\", \"callback_data\": \"redemption_details_{{168.id}}\"}],\n  [{\"text\": \"✅ אשר פדיון\", \"callback_data\": \"approve_redemption_{{168.id}}\"}],\n  [{\"text\": \"🔄 העבר לבדיקה\", \"callback_data\": \"review_redemption_{{168.id}}\"}]\n]",
+        "גבייה": "[\n  [{\"text\": \"💳 עדכן אמצעי תשלום\", \"callback_data\": \"payment_method_{{168.id}}\"}],\n  [{\"text\": \"📊 היסטוריית גבייה\", \"callback_data\": \"payment_history_{{168.id}}\"}],\n  [{\"text\": \"🔔 שלח תזכורת\", \"callback_data\": \"send_reminder_{{168.id}}\"}]\n]"
+      }
+    }
+  },
+
+  "color_emoji_guide": {
+    "status_colors": {
+      "🟢": "סטטוס חיובי / מאושר",
+      "🟡": "ממתין / דורש תשומת לב",
+      "🔴": "נדחה / בעיה",
+      "🔵": "בתהליך",
+      "⚪": "ניטרלי / ביטול",
+      "🟣": "חדש / לא נצפה"
+    },
+    "category_emojis": {
+      "תביעה": "💉 🏥",
+      "מינוי_סוכן": "📝 ✍️",
+      "פדיון": "💰 💸",
+      "ניוד": "🔄 ↔️",
+      "ביטול": "❌ 🚫",
+      "שינוי_מסלול": "🛤️ 🔀",
+      "גבייה": "💳 💵",
+      "שירות": "🛠️ ⚙️"
+    },
+    "action_emojis": {
+      "approve": "✅ ☑️",
+      "reject": "❌ ✖️",
+      "edit": "✏️ 📝",
+      "delete": "🗑️ 🚮",
+      "send": "📤 📨",
+      "call": "📞 ☎️",
+      "email": "📧 ✉️",
+      "docs": "📎 📄",
+      "info": "ℹ️ 💡"
+    }
+  },
+
+  "make_module_configurations": {
+    "telegram_send_message_improved": {
+      "module_id": 92,
+      "module_type": "telegram:SendReplyMessage",
+      "parameters": {
+        "chatId": "943799099",
+        "text": "{{main_message_v2.text}}",
+        "parseMode": "Markdown",
+        "replyMarkup": "{{modern_buttons.format}}",
+        "disableWebPagePreview": true
+      },
+      "notes": "החלף את Module 92 בקונפיגורציה זו"
+    },
+
+    "text_aggregator_improved": {
+      "module_id": 154,
+      "module_type": "util:TextAggregator",
+      "parameters": {
+        "feeder": 168,
+        "rowSeparator": "other",
+        "otherRowSeparator": ","
+      },
+      "mapper": {
+        "value": "[{\"text\": \"📋 {{168.typeName}}\", \"callback_data\": \"header_{{168.typeId}}\"}],\n[{\"text\": \"🔹 נוכחי: {{168.statusName}}\", \"callback_data\": \"current\"}],\n[{\"text\": \"✨ המלצה: {{163.result.selected_title}}\", \"callback_data\": \"{{168.number}}|{{163.result.selected_id}}\"}],\n[{\"text\": \"━━━━━━━━━━━━━━\", \"callback_data\": \"sep\"}],\n[{\"text\": \"✅ אשר\", \"callback_data\": \"approve_{{168.id}}\"}, {\"text\": \"❌ בטל\", \"callback_data\": \"cancel\"}]"
+      },
+      "notes": "החלף את Module 154 בקונפיגורציה זו"
+    }
+  },
+
+  "testing_examples": {
+    "example_1": {
+      "input": {
+        "customer_name": "יוסי כהן",
+        "customer_id": "123456789",
+        "product": "פנסיה",
+        "vendor": "מגדל",
+        "process_category": "מינוי סוכן",
+        "topic": "טופס חתום התקבל",
+        "summary": "התקבל טופס מינוי סוכן חתום מהלקוח",
+        "attachments": "כן - 2 קבצים"
+      },
+      "expected_telegram_output": "כפתורים עם אופציות: אשר שליחה ליצרן, ערוך, בטל"
+    }
+  }
+}
