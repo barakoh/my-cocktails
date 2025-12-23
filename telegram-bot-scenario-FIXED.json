@@ -1,0 +1,2109 @@
+{
+    "name": "🤖 Telegram CRM Bot - PERFECT BLUEPRINT (FIXED)",
+    "flow": [
+        {
+            "id": 84,
+            "module": "telegram:WatchUpdates",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 3723298
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 600
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "creat workflow telegram bot"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:telegramapi",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "datastore:SearchRecord",
+            "version": 1,
+            "parameters": {
+                "limit": 1,
+                "datastore": 141391,
+                "continueWhenNoRes": true
+            },
+            "filter": {
+                "name": "Authorized Chat Only",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{84.message.chat.id}}",
+                            "b": "943799099",
+                            "o": "text:equal"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "sort": [
+                    {
+                        "key": "timestamp",
+                        "order": -1
+                    }
+                ],
+                "filter": [
+                    [
+                        {
+                            "a": "key",
+                            "b": "{{84.message.chat.id}}",
+                            "o": "text:equal"
+                        }
+                    ]
+                ],
+                "mappAbleLimit": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 600
+                },
+                "restore": {
+                    "expect": {
+                        "sort": {
+                            "items": [
+                                {
+                                    "key": {
+                                        "mode": "chose",
+                                        "label": "timestamp"
+                                    },
+                                    "order": {
+                                        "mode": "chose",
+                                        "label": "Descending"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "datastore": {
+                            "label": "TELEGRAM BOT"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "datastore",
+                        "type": "datastore",
+                        "label": "Data store",
+                        "required": true
+                    },
+                    {
+                        "name": "continueWhenNoRes",
+                        "type": "boolean",
+                        "label": "Continue the execution of the route even if the module returns no results"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "filter",
+                        "type": "filter",
+                        "label": "Filter",
+                        "options": "rpc://datastore/1.12.1/RpcGetUDTKeys",
+                        "required": true
+                    },
+                    {
+                        "name": "sort",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "select",
+                                "label": "Key",
+                                "dynamic": true,
+                                "options": [],
+                                "required": true
+                            },
+                            {
+                                "name": "order",
+                                "type": "select",
+                                "label": "Order",
+                                "options": [
+                                    {
+                                        "label": "Ascending",
+                                        "value": 1
+                                    },
+                                    {
+                                        "label": "Descending",
+                                        "value": -1
+                                    }
+                                ],
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Sort"
+                    },
+                    {
+                        "name": "mappAbleLimit",
+                        "type": "uinteger",
+                        "label": "Mappable Limit"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key"
+                    },
+                    {
+                        "name": "data",
+                        "spec": [
+                            {
+                                "help": "",
+                                "name": "key",
+                                "type": "text",
+                                "label": null,
+                                "default": null,
+                                "required": false,
+                                "multiline": false
+                            },
+                            {
+                                "help": "",
+                                "name": "conversation_history",
+                                "type": "text",
+                                "label": null,
+                                "default": null,
+                                "required": false,
+                                "multiline": false
+                            },
+                            {
+                                "help": "",
+                                "name": "timestamp",
+                                "type": "date",
+                                "label": null,
+                                "required": false
+                            },
+                            {
+                                "help": "",
+                                "name": "current_workflow_id",
+                                "type": "text",
+                                "label": null,
+                                "default": null,
+                                "required": false,
+                                "multiline": false
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Record"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 600
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 10,
+                            "module": "datastore:UpdateRecord",
+                            "version": 1,
+                            "parameters": {
+                                "datastore": 141391
+                            },
+                            "filter": {
+                                "name": "Text Message Only",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{84.message.document}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "key": "{{84.message.chat.id}}",
+                                "data": {
+                                    "key": "{{2.data.key}}",
+                                    "timestamp": "{{2.data.timestamp}}",
+                                    "current_workflow_id": "{{2.data.current_workflow_id}}",
+                                    "conversation_history": "{{if(2.data.conversation_history; 2.data.conversation_history + newline + \"user: \" + 84.message.text; \"user: \" + 84.message.text)}}"
+                                },
+                                "upsert": true,
+                                "overwriteArrays": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 825,
+                                    "y": 447
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "upsert": {
+                                            "mode": "chose"
+                                        },
+                                        "overwriteArrays": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "datastore": {
+                                            "label": "TELEGRAM BOT"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "datastore",
+                                        "type": "datastore",
+                                        "label": "Data store",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "key",
+                                        "type": "text",
+                                        "label": "Key",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "upsert",
+                                        "type": "boolean",
+                                        "label": "Insert missing record",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "overwriteArrays",
+                                        "type": "boolean",
+                                        "label": "Overwrite an existing array in the record",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "data",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": null
+                                            },
+                                            {
+                                                "name": "conversation_history",
+                                                "type": "text",
+                                                "label": null
+                                            },
+                                            {
+                                                "name": "timestamp",
+                                                "type": "date",
+                                                "label": null
+                                            },
+                                            {
+                                                "name": "current_workflow_id",
+                                                "type": "text",
+                                                "label": null
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Record"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 11,
+                            "module": "gemini-ai:createACompletionGeminiPro",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 13206562
+                            },
+                            "mapper": {
+                                "model": "gemini-2.0-flash-exp",
+                                "contents": [
+                                    {
+                                        "role": "user",
+                                        "parts": [
+                                            {
+                                                "text": "היסטוריית שיחה:{{2.data.conversation_history}}\nהודעה נוכחית:\n{{84.message.text}}",
+                                                "type": "text"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "generationConfig": {
+                                    "imageConfig": {},
+                                    "temperature": "0.1",
+                                    "thinkingConfig": {},
+                                    "responseMimeType": "application/json"
+                                },
+                                "system_instruction": {
+                                    "parts": [
+                                        {
+                                            "text": "את נטע, עוזרת אדמיניסטרטיבית חכמה עבור ברק.\n\nהמטרה: לחלץ מידע מובנה מתוך טקסט לפעולות ב-CRM SURENSE.\n\n⚠️ כללים קריטיים:\n1. השדה client_name חייב להופיע תמיד ברמה הראשית!\n2. אסור להמציא נתונים.\n3. תמיד להחזיר JSON תקין עם action ו-reply_text.\n\nתרחישים:\n\n1️⃣ יצירת תהליך (אם יש: לקוח + יצרן + סוג תהליך + מוצר):\n{\n  \"action\": \"create_workflow\",\n  \"client_name\": \"שם הלקוח\",\n  \"workflow_data\": {\n    \"manufacturer\": \"היצרן\",\n    \"process_type\": \"סוג התהליך\",\n    \"product\": \"המוצר\"\n  },\n  \"reply_text\": \"מכינה תהליך [סוג] ל[מוצר] ב[יצרן] עבור [שם]...\"\n}\n\n2️⃣ פרטים חסרים:\n{\n  \"action\": \"ask_details\",\n  \"client_name\": \"שם אם קיים או null\",\n  \"missing_fields\": [\"manufacturer\", \"process_type\", \"product\"],\n  \"reply_text\": \"מצאתי את [שם]. חסר לי: [פרטים].\"\n}\n\n3️⃣ שיחה רגילה:\n{\n  \"action\": \"chat\",\n  \"reply_text\": \"תשובה טבעית\"\n}\n\nדוגמאות:\n\nקלט: \"צור תהליך של שינוי מסלול בקרן פנסיה בפניקס עבור משה כהן\"\nפלט: {\"action\":\"create_workflow\",\"client_name\":\"משה כהן\",\"workflow_data\":{\"manufacturer\":\"פניקס\",\"process_type\":\"שינוי מסלול\",\"product\":\"קרן פנסיה\"},\"reply_text\":\"מכינה תהליך שינוי מסלול בקרן פנסיה בפניקס עבור משה כהן...\"}\n\nקלט: \"תפתח תהליך ללקוח רותם אוחיון\"\nפלט: {\"action\":\"ask_details\",\"client_name\":\"רותם אוחיון\",\"missing_fields\":[\"manufacturer\",\"process_type\",\"product\"],\"reply_text\":\"מצאתי את רותם אוחיון. איזה תהליך? באיזה יצרן ומוצר?\"}\n\nקלט: \"תודה\"\nפלט: {\"action\":\"chat\",\"reply_text\":\"בשמחה! 😊\"}\n\nקלט: \"ביטול פוליסה בקרן פנסיה בהראל לדוד לוי\"\nפלט: {\"action\":\"create_workflow\",\"client_name\":\"דוד לוי\",\"workflow_data\":{\"manufacturer\":\"הראל\",\"process_type\":\"ביטול פוליסה\",\"product\":\"קרן פנסיה\"},\"reply_text\":\"מכינה תהליך ביטול פוליסה בקרן פנסיה בהראל עבור דוד לוי...\"}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1208,
+                                    "y": 445
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "model": {
+                                            "mode": "chose",
+                                            "label": "Gemini 2.0 Flash Experimental"
+                                        },
+                                        "contents": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "role": {
+                                                        "mode": "chose",
+                                                        "label": "User"
+                                                    },
+                                                    "parts": {
+                                                        "mode": "chose",
+                                                        "items": [
+                                                            {
+                                                                "type": {
+                                                                    "mode": "chose",
+                                                                    "label": "Text"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "url_context": {
+                                            "mode": "chose"
+                                        },
+                                        "code_execution": {
+                                            "mode": "chose"
+                                        },
+                                        "safetySettings": {
+                                            "mode": "chose"
+                                        },
+                                        "generationConfig": {
+                                            "nested": {
+                                                "imageConfig": {
+                                                    "nested": {
+                                                        "imageSize": {
+                                                            "mode": "chose",
+                                                            "label": "Empty"
+                                                        }
+                                                    }
+                                                },
+                                                "stopSequences": {
+                                                    "mode": "chose"
+                                                },
+                                                "thinkingConfig": {
+                                                    "nested": {
+                                                        "thinking_level": {
+                                                            "mode": "chose",
+                                                            "label": "Empty"
+                                                        },
+                                                        "include_thoughts": {
+                                                            "mode": "chose"
+                                                        }
+                                                    }
+                                                },
+                                                "mediaResolution": {
+                                                    "mode": "chose",
+                                                    "label": "Empty"
+                                                },
+                                                "responseMimeType": {
+                                                    "mode": "chose",
+                                                    "label": "JSON Output"
+                                                },
+                                                "new_responseSchema": {
+                                                    "mode": "chose"
+                                                },
+                                                "responseModalities": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "system_instruction": {
+                                            "nested": {
+                                                "parts": {
+                                                    "mode": "chose",
+                                                    "items": [
+                                                        null
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        "google_maps_context": {
+                                            "mode": "chose"
+                                        },
+                                        "google_search_context": {
+                                            "mode": "chose"
+                                        },
+                                        "file_search_store_context": {
+                                            "mode": "chose"
+                                        },
+                                        "function_declarations_context": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "gemini-ai-q9zyjp"
+                                            },
+                                            "label": "My Gemini AI connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:gemini-ai-q9zyjp",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 12,
+                            "module": "json:ParseJSON",
+                            "version": 1,
+                            "parameters": {
+                                "type": 514567
+                            },
+                            "mapper": {
+                                "json": "{{11.result}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 450
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "type": {
+                                            "label": "My data structure"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "type",
+                                        "type": "udt",
+                                        "label": "Data structure"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "json",
+                                        "type": "text",
+                                        "label": "JSON string",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 13,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 450
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 20,
+                                            "module": "surense:UniversalModule",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 10986761
+                                            },
+                                            "filter": {
+                                                "name": "Action: create_workflow",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{12.action}}",
+                                                            "b": "create_workflow",
+                                                            "o": "text:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "url": "workflows/types",
+                                                "method": "GET",
+                                                "headers": [
+                                                    {
+                                                        "key": "Content-Type",
+                                                        "value": "application/json"
+                                                    }
+                                                ]
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "qs": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "method": {
+                                                            "mode": "chose",
+                                                            "label": "GET"
+                                                        },
+                                                        "headers": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "surense"
+                                                            },
+                                                            "label": "My Surense connection"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": 21,
+                                            "module": "builtin:BasicFeeder",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "mapper": {
+                                                "array": "{{20.body}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2400,
+                                                    "y": 300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "array": {
+                                                            "mode": "edit"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": 22,
+                                            "module": "builtin:BasicRouter",
+                                            "version": 1,
+                                            "filter": {
+                                                "name": "Match Process Type",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{lower(21.title)}}",
+                                                            "b": "{{lower(12.workflow_data.process_type)}}",
+                                                            "o": "text:contain:ci"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": null,
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2700,
+                                                    "y": 300
+                                                }
+                                            },
+                                            "routes": [
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 30,
+                                                            "module": "surense:UniversalModule",
+                                                            "version": 1,
+                                                            "parameters": {
+                                                                "__IMTCONN__": 10986761
+                                                            },
+                                                            "mapper": {
+                                                                "url": "products",
+                                                                "method": "GET",
+                                                                "headers": [
+                                                                    {
+                                                                        "key": "Content-Type",
+                                                                        "value": "application/json"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 3000,
+                                                                    "y": 300
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "qs": {
+                                                                            "mode": "chose"
+                                                                        },
+                                                                        "method": {
+                                                                            "mode": "chose",
+                                                                            "label": "GET"
+                                                                        },
+                                                                        "headers": {
+                                                                            "mode": "chose",
+                                                                            "items": [
+                                                                                null
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "parameters": {
+                                                                        "__IMTCONN__": {
+                                                                            "data": {
+                                                                                "scoped": "true",
+                                                                                "connection": "surense"
+                                                                            },
+                                                                            "label": "My Surense connection (barakoh111@gmail.com)"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": 31,
+                                                            "module": "builtin:BasicFeeder",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "mapper": {
+                                                                "array": "{{30.body}}"
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 3300,
+                                                                    "y": 300
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "array": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": 32,
+                                                            "module": "builtin:BasicAggregator",
+                                                            "version": 1,
+                                                            "parameters": {
+                                                                "feeder": 31
+                                                            },
+                                                            "filter": {
+                                                                "name": "🔑 VALIDATION: Product Name Match",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{31.productType.description}}",
+                                                                            "b": "{{12.workflow_data.product}}",
+                                                                            "o": "text:contain:ci"
+                                                                        },
+                                                                        {
+                                                                            "a": "{{31.productName}}",
+                                                                            "b": "{{12.workflow_data.manufacturer}}",
+                                                                            "o": "text:contain:ci"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "id": "{{31.id}}",
+                                                                "ira": "{{31.ira}}",
+                                                                "code": "{{31.code}}",
+                                                                "group": "{{31.group}}",
+                                                                "order": "{{31.order}}",
+                                                                "value": "{{31.value}}",
+                                                                "closed": "{{31.closed}}",
+                                                                "version": "{{31.version}}",
+                                                                "closedAt": "{{31.closedAt}}",
+                                                                "editable": "{{31.editable}}",
+                                                                "obsolete": "{{31.obsolete}}",
+                                                                "position": "{{31.position}}",
+                                                                "tenantId": "{{31.tenantId}}",
+                                                                "companyId": "{{31.companyId}}",
+                                                                "createdBy": "{{31.createdBy}}",
+                                                                "deletable": "{{31.deletable}}",
+                                                                "createdDate": "{{31.createdDate}}",
+                                                                "creatorName": "{{31.creatorName}}",
+                                                                "description": "{{31.description}}",
+                                                                "productCode": "{{31.productCode}}",
+                                                                "productName": "{{31.productName}}",
+                                                                "productType": "{{31.productType}}",
+                                                                "__IMTINDEX__": "{{31.`__IMTINDEX__`}}",
+                                                                "__IMTLENGTH__": "{{31.`__IMTLENGTH__`}}",
+                                                                "companyIdNumber": "{{31.companyIdNumber}}",
+                                                                "lastModifiedDate": "{{31.lastModifiedDate}}",
+                                                                "shortDescription": "{{31.shortDescription}}",
+                                                                "defaultDepositFee": "{{31.defaultDepositFee}}",
+                                                                "defaultAccumulationFee": "{{31.defaultAccumulationFee}}",
+                                                                "productCreationEnabled": "{{31.productCreationEnabled}}"
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 3600,
+                                                                    "y": 300
+                                                                },
+                                                                "restore": {
+                                                                    "extra": {
+                                                                        "feeder": {
+                                                                            "label": "Iterator [31]"
+                                                                        },
+                                                                        "target": {
+                                                                            "label": "Custom"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": 33,
+                                                            "module": "builtin:BasicRouter",
+                                                            "version": 1,
+                                                            "mapper": null,
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 3900,
+                                                                    "y": 300
+                                                                }
+                                                            },
+                                                            "routes": [
+                                                                {
+                                                                    "flow": [
+                                                                        {
+                                                                            "id": 40,
+                                                                            "module": "datastore:UpdateRecord",
+                                                                            "version": 1,
+                                                                            "parameters": {
+                                                                                "datastore": 141391
+                                                                            },
+                                                                            "filter": {
+                                                                                "name": "✅ Valid Match Found",
+                                                                                "conditions": [
+                                                                                    [
+                                                                                        {
+                                                                                            "a": "{{length(32.array)}}",
+                                                                                            "b": "0",
+                                                                                            "o": "number:greater"
+                                                                                        }
+                                                                                    ]
+                                                                                ]
+                                                                            },
+                                                                            "mapper": {
+                                                                                "key": "{{84.message.chat.id}}",
+                                                                                "data": {
+                                                                                    "key": "{{2.data.key}}",
+                                                                                    "timestamp": "{{2.data.timestamp}}",
+                                                                                    "current_workflow_id": "{{2.data.current_workflow_id}}",
+                                                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: {{12.reply_text}}"
+                                                                                },
+                                                                                "upsert": true,
+                                                                                "overwriteArrays": false
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 4200,
+                                                                                    "y": 150
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "upsert": {
+                                                                                            "mode": "chose"
+                                                                                        },
+                                                                                        "overwriteArrays": {
+                                                                                            "mode": "chose"
+                                                                                        }
+                                                                                    },
+                                                                                    "parameters": {
+                                                                                        "datastore": {
+                                                                                            "label": "TELEGRAM BOT"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "parameters": [
+                                                                                    {
+                                                                                        "name": "datastore",
+                                                                                        "type": "datastore",
+                                                                                        "label": "Data store",
+                                                                                        "required": true
+                                                                                    }
+                                                                                ],
+                                                                                "expect": [
+                                                                                    {
+                                                                                        "name": "key",
+                                                                                        "type": "text",
+                                                                                        "label": "Key",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "upsert",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Insert missing record",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "overwriteArrays",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Overwrite an existing array in the record",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "data",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "key",
+                                                                                                "type": "text",
+                                                                                                "label": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "conversation_history",
+                                                                                                "type": "text",
+                                                                                                "label": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "timestamp",
+                                                                                                "type": "date",
+                                                                                                "label": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "current_workflow_id",
+                                                                                                "type": "text",
+                                                                                                "label": null
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "collection",
+                                                                                        "label": "Record"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "id": 41,
+                                                                            "module": "surense:SearchCustomers",
+                                                                            "version": 1,
+                                                                            "parameters": {
+                                                                                "__IMTCONN__": 10986761
+                                                                            },
+                                                                            "mapper": {
+                                                                                "limit": "1",
+                                                                                "order": "desc",
+                                                                                "orderBy": "createdDate",
+                                                                                "quickFilter": "{{12.client_name}}"
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 4500,
+                                                                                    "y": 150
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "order": {
+                                                                                            "mode": "chose",
+                                                                                            "label": "יורד"
+                                                                                        },
+                                                                                        "orderBy": {
+                                                                                            "mode": "chose",
+                                                                                            "label": "תאריך יצירה"
+                                                                                        }
+                                                                                    },
+                                                                                    "parameters": {
+                                                                                        "__IMTCONN__": {
+                                                                                            "data": {
+                                                                                                "scoped": "true",
+                                                                                                "connection": "surense"
+                                                                                            },
+                                                                                            "label": "My Surense connection"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "id": 80,
+                                                                            "module": "builtin:BasicRouter",
+                                                                            "version": 1,
+                                                                            "parameters": {
+                                                                                "else": 1
+                                                                            },
+                                                                            "filter": {
+                                                                                "name": "Customer Found",
+                                                                                "conditions": [
+                                                                                    [
+                                                                                        {
+                                                                                            "a": "{{41.__IMTLENGTH__}}",
+                                                                                            "b": "0",
+                                                                                            "o": "number:greater"
+                                                                                        }
+                                                                                    ]
+                                                                                ]
+                                                                            },
+                                                                            "mapper": null,
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 4800,
+                                                                                    "y": 150
+                                                                                }
+                                                                            },
+                                                                            "routes": [
+                                                                                {
+                                                                                    "flow": [
+                                                                                        {
+                                                                                            "id": 75,
+                                                                                            "module": "surense:UniversalModule",
+                                                                                            "version": 1,
+                                                                                            "parameters": {
+                                                                                                "__IMTCONN__": 10986761
+                                                                                            },
+                                                                                            "mapper": {
+                                                                                                "url": "workflows",
+                                                                                                "body": "{\r\n  \"typeId\": \"{{21.id}}\", \r\n  \"customerId\": \"{{41.id}}\",\r\n  \"ownerId\": \"65604b8e-3859-42d1-9493-779c18a86b4f\"\r\n}",
+                                                                                                "method": "POST",
+                                                                                                "headers": [
+                                                                                                    {
+                                                                                                        "key": "Content-Type",
+                                                                                                        "value": "application/json"
+                                                                                                    }
+                                                                                                ]
+                                                                                            },
+                                                                                            "metadata": {
+                                                                                                "designer": {
+                                                                                                    "x": 5100,
+                                                                                                    "y": 0
+                                                                                                },
+                                                                                                "restore": {
+                                                                                                    "expect": {
+                                                                                                        "qs": {
+                                                                                                            "mode": "chose"
+                                                                                                        },
+                                                                                                        "method": {
+                                                                                                            "mode": "chose",
+                                                                                                            "label": "POST"
+                                                                                                        },
+                                                                                                        "headers": {
+                                                                                                            "mode": "chose",
+                                                                                                            "items": [
+                                                                                                                null
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "parameters": {
+                                                                                                        "__IMTCONN__": {
+                                                                                                            "data": {
+                                                                                                                "scoped": "true",
+                                                                                                                "connection": "surense"
+                                                                                                            },
+                                                                                                            "label": "My Surense connection (barakoh111@gmail.com)"
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "id": 79,
+                                                                                            "module": "surense:UniversalModule",
+                                                                                            "version": 1,
+                                                                                            "parameters": {
+                                                                                                "__IMTCONN__": 10986761
+                                                                                            },
+                                                                                            "filter": {
+                                                                                                "name": "Customer Found",
+                                                                                                "conditions": [
+                                                                                                    [
+                                                                                                        {
+                                                                                                            "a": "{{41.__IMTLENGTH__}}",
+                                                                                                            "b": "0",
+                                                                                                            "o": "number:greater"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                ]
+                                                                                            },
+                                                                                            "mapper": {
+                                                                                                "url": "workflows/{{75.body.id}}",
+                                                                                                "body": "{\r\n  \"newCompanyId\": {{32.array[].companyId}},\r\n  \"newProductType\": {{32.array[].productType.code}}\r\n}",
+                                                                                                "method": "PATCH",
+                                                                                                "headers": [
+                                                                                                    {
+                                                                                                        "key": "Content-Type",
+                                                                                                        "value": "application/json"
+                                                                                                    }
+                                                                                                ]
+                                                                                            },
+                                                                                            "metadata": {
+                                                                                                "designer": {
+                                                                                                    "x": 5461,
+                                                                                                    "y": 6
+                                                                                                },
+                                                                                                "restore": {
+                                                                                                    "expect": {
+                                                                                                        "qs": {
+                                                                                                            "mode": "chose"
+                                                                                                        },
+                                                                                                        "method": {
+                                                                                                            "mode": "chose",
+                                                                                                            "label": "PATCH"
+                                                                                                        },
+                                                                                                        "headers": {
+                                                                                                            "mode": "chose",
+                                                                                                            "items": [
+                                                                                                                null
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "parameters": {
+                                                                                                        "__IMTCONN__": {
+                                                                                                            "data": {
+                                                                                                                "scoped": "true",
+                                                                                                                "connection": "surense"
+                                                                                                            },
+                                                                                                            "label": "My Surense connection (barakoh111@gmail.com)"
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "id": 43,
+                                                                                            "module": "datastore:UpdateRecord",
+                                                                                            "version": 1,
+                                                                                            "parameters": {
+                                                                                                "datastore": 141391
+                                                                                            },
+                                                                                            "mapper": {
+                                                                                                "key": "{{84.message.chat.id}}",
+                                                                                                "upsert": true,
+                                                                                                "overwriteArrays": false,
+                                                                                                "data": {
+                                                                                                    "key": "{{2.data.key}}",
+                                                                                                    "timestamp": "{{2.data.timestamp}}",
+                                                                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: התהליך נוצר בהצלחה! יש קבצים שתרצה לצרף?",
+                                                                                                    "current_workflow_id": "{{75.body.id}}"
+                                                                                                }
+                                                                                            },
+                                                                                            "metadata": {
+                                                                                                "designer": {
+                                                                                                    "x": 5742,
+                                                                                                    "y": 12
+                                                                                                },
+                                                                                                "restore": {
+                                                                                                    "parameters": {
+                                                                                                        "datastore": {
+                                                                                                            "label": "TELEGRAM BOT"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "expect": {
+                                                                                                        "upsert": {
+                                                                                                            "mode": "chose"
+                                                                                                        },
+                                                                                                        "overwriteArrays": {
+                                                                                                            "mode": "chose"
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "parameters": [
+                                                                                                    {
+                                                                                                        "name": "datastore",
+                                                                                                        "type": "datastore",
+                                                                                                        "label": "Data store",
+                                                                                                        "required": true
+                                                                                                    }
+                                                                                                ],
+                                                                                                "expect": [
+                                                                                                    {
+                                                                                                        "name": "key",
+                                                                                                        "type": "text",
+                                                                                                        "label": "Key",
+                                                                                                        "required": true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "name": "upsert",
+                                                                                                        "type": "boolean",
+                                                                                                        "label": "Insert missing record",
+                                                                                                        "required": true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "name": "overwriteArrays",
+                                                                                                        "type": "boolean",
+                                                                                                        "label": "Overwrite an existing array in the record",
+                                                                                                        "required": true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "name": "data",
+                                                                                                        "type": "collection",
+                                                                                                        "label": "Record",
+                                                                                                        "spec": [
+                                                                                                            {
+                                                                                                                "name": "key",
+                                                                                                                "type": "text",
+                                                                                                                "label": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "conversation_history",
+                                                                                                                "type": "text",
+                                                                                                                "label": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "timestamp",
+                                                                                                                "type": "date",
+                                                                                                                "label": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "current_workflow_id",
+                                                                                                                "type": "text",
+                                                                                                                "label": null
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "id": 45,
+                                                                                            "module": "telegram:SendReplyMessage",
+                                                                                            "version": 1,
+                                                                                            "parameters": {
+                                                                                                "__IMTCONN__": 13375602
+                                                                                            },
+                                                                                            "mapper": {
+                                                                                                "text": "✅ התהליך נוצר בהצלחה!\n\n📋 פרטים:\n👤 לקוח: {{12.client_name}}\n📝 סוג: {{12.workflow_data.process_type}}\n📦 מוצר: {{12.workflow_data.product}}\n🏢 יצרן: {{12.workflow_data.manufacturer}}\n\n📎 יש קבצים שתרצה לצרף לתהליך?",
+                                                                                                "chatId": "{{84.message.chat.id}}",
+                                                                                                "parseMode": "",
+                                                                                                "replyMarkup": "",
+                                                                                                "messageThreadId": "",
+                                                                                                "replyToMessageId": "",
+                                                                                                "replyMarkupAssembleType": "reply_markup_enter"
+                                                                                            },
+                                                                                            "metadata": {
+                                                                                                "designer": {
+                                                                                                    "x": 6000,
+                                                                                                    "y": 0
+                                                                                                },
+                                                                                                "restore": {
+                                                                                                    "expect": {
+                                                                                                        "parseMode": {
+                                                                                                            "label": "Empty"
+                                                                                                        },
+                                                                                                        "disableNotification": {
+                                                                                                            "mode": "chose"
+                                                                                                        },
+                                                                                                        "replyMarkupAssembleType": {
+                                                                                                            "label": "Enter the Reply Markup"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "parameters": {
+                                                                                                        "__IMTCONN__": {
+                                                                                                            "data": {
+                                                                                                                "scoped": "true",
+                                                                                                                "connection": "telegram"
+                                                                                                            },
+                                                                                                            "label": "creat workflow telegram bot"
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "flow": [
+                                                                                        {
+                                                                                            "id": 82,
+                                                                                            "module": "datastore:UpdateRecord",
+                                                                                            "version": 1,
+                                                                                            "parameters": {
+                                                                                                "datastore": 141391
+                                                                                            },
+                                                                                            "filter": {
+                                                                                                "name": "Customer not found",
+                                                                                                "conditions": []
+                                                                                            },
+                                                                                            "mapper": {
+                                                                                                "key": "{{84.message.chat.id}}",
+                                                                                                "data": {
+                                                                                                    "key": "{{2.data.key}}",
+                                                                                                    "timestamp": "{{2.data.timestamp}}",
+                                                                                                    "current_workflow_id": "{{2.data.current_workflow_id}}",
+                                                                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: לא מצאתי התאמה לשם הלקוח. אפשר לנסח אחרת?"
+                                                                                                },
+                                                                                                "upsert": true,
+                                                                                                "overwriteArrays": false
+                                                                                            },
+                                                                                            "metadata": {
+                                                                                                "designer": {
+                                                                                                    "x": 5028,
+                                                                                                    "y": 490
+                                                                                                },
+                                                                                                "restore": {
+                                                                                                    "expect": {
+                                                                                                        "upsert": {
+                                                                                                            "mode": "chose"
+                                                                                                        },
+                                                                                                        "overwriteArrays": {
+                                                                                                            "mode": "chose"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "parameters": {
+                                                                                                        "datastore": {
+                                                                                                            "label": "TELEGRAM BOT"
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "parameters": [
+                                                                                                    {
+                                                                                                        "name": "datastore",
+                                                                                                        "type": "datastore",
+                                                                                                        "label": "Data store",
+                                                                                                        "required": true
+                                                                                                    }
+                                                                                                ],
+                                                                                                "expect": [
+                                                                                                    {
+                                                                                                        "name": "key",
+                                                                                                        "type": "text",
+                                                                                                        "label": "Key",
+                                                                                                        "required": true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "name": "upsert",
+                                                                                                        "type": "boolean",
+                                                                                                        "label": "Insert missing record",
+                                                                                                        "required": true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "name": "overwriteArrays",
+                                                                                                        "type": "boolean",
+                                                                                                        "label": "Overwrite an existing array in the record",
+                                                                                                        "required": true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "name": "data",
+                                                                                                        "spec": [
+                                                                                                            {
+                                                                                                                "name": "key",
+                                                                                                                "type": "text",
+                                                                                                                "label": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "conversation_history",
+                                                                                                                "type": "text",
+                                                                                                                "label": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "timestamp",
+                                                                                                                "type": "date",
+                                                                                                                "label": null
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "name": "current_workflow_id",
+                                                                                                                "type": "text",
+                                                                                                                "label": null
+                                                                                                            }
+                                                                                                        ],
+                                                                                                        "type": "collection",
+                                                                                                        "label": "Record"
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "id": 81,
+                                                                                            "module": "telegram:SendReplyMessage",
+                                                                                            "version": 1,
+                                                                                            "parameters": {
+                                                                                                "__IMTCONN__": 13375602
+                                                                                            },
+                                                                                            "mapper": {
+                                                                                                "text": "לא מצאתי התאמה לשם הלקוח. \r\nאפשר לנסח אחרת?  ",
+                                                                                                "chatId": "{{84.message.chat.id}}",
+                                                                                                "parseMode": "",
+                                                                                                "replyMarkup": "",
+                                                                                                "messageThreadId": "",
+                                                                                                "replyToMessageId": "",
+                                                                                                "replyMarkupAssembleType": "reply_markup_enter"
+                                                                                            },
+                                                                                            "metadata": {
+                                                                                                "designer": {
+                                                                                                    "x": 5242,
+                                                                                                    "y": 798
+                                                                                                },
+                                                                                                "restore": {
+                                                                                                    "expect": {
+                                                                                                        "parseMode": {
+                                                                                                            "label": "Empty"
+                                                                                                        },
+                                                                                                        "disableNotification": {
+                                                                                                            "mode": "chose"
+                                                                                                        },
+                                                                                                        "replyMarkupAssembleType": {
+                                                                                                            "label": "Enter the Reply Markup"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "parameters": {
+                                                                                                        "__IMTCONN__": {
+                                                                                                            "data": {
+                                                                                                                "scoped": "true",
+                                                                                                                "connection": "telegram"
+                                                                                                            },
+                                                                                                            "label": "creat workflow telegram bot"
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "flow": [
+                                                                        {
+                                                                            "id": 50,
+                                                                            "module": "telegram:SendReplyMessage",
+                                                                            "version": 1,
+                                                                            "parameters": {
+                                                                                "__IMTCONN__": 13375602
+                                                                            },
+                                                                            "filter": {
+                                                                                "name": "❌ No Valid Match",
+                                                                                "conditions": [
+                                                                                    [
+                                                                                        {
+                                                                                            "a": "{{length(32.array)}}",
+                                                                                            "b": "0",
+                                                                                            "o": "number:equal"
+                                                                                        }
+                                                                                    ]
+                                                                                ]
+                                                                            },
+                                                                            "mapper": {
+                                                                                "text": "❌ שגיאה: השילוב לא תקין!\n\n🚫 לא ניתן לבצע \"{{12.workflow_data.process_type}}\" עבור \"{{12.workflow_data.product}}\".\n\n💡 הסיבה: סוג התהליך הזה לא נתמך עבור סוג המוצר שביקשת.\n\nאנא בדוק את הפרטים ונסה שוב, או פנה לתמיכה.",
+                                                                                "chatId": "{{84.message.chat.id}}",
+                                                                                "parseMode": "",
+                                                                                "replyMarkup": "",
+                                                                                "messageThreadId": "",
+                                                                                "replyToMessageId": "",
+                                                                                "replyMarkupAssembleType": "reply_markup_enter"
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 4200,
+                                                                                    "y": 600
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "parseMode": {
+                                                                                            "label": "Empty"
+                                                                                        },
+                                                                                        "disableNotification": {
+                                                                                            "mode": "chose"
+                                                                                        },
+                                                                                        "replyMarkupAssembleType": {
+                                                                                            "label": "Enter the Reply Markup"
+                                                                                        }
+                                                                                    },
+                                                                                    "parameters": {
+                                                                                        "__IMTCONN__": {
+                                                                                            "data": {
+                                                                                                "scoped": "true",
+                                                                                                "connection": "telegram"
+                                                                                            },
+                                                                                            "label": "creat workflow telegram bot"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 61,
+                                            "module": "datastore:UpdateRecord",
+                                            "version": 1,
+                                            "parameters": {
+                                                "datastore": 141391
+                                            },
+                                            "filter": {
+                                                "name": "Other Actions (not create_workflow)",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{12.action}}",
+                                                            "b": "create_workflow",
+                                                            "o": "text:notequal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "key": "{{84.message.chat.id}}",
+                                                "data": {
+                                                    "key": "{{2.data.key}}",
+                                                    "timestamp": "{{2.data.timestamp}}",
+                                                    "current_workflow_id": "{{2.data.current_workflow_id}}",
+                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: {{12.reply_text}}"
+                                                },
+                                                "upsert": true,
+                                                "overwriteArrays": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 750
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "upsert": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "overwriteArrays": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "datastore": {
+                                                            "label": "TELEGRAM BOT"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "datastore",
+                                                        "type": "datastore",
+                                                        "label": "Data store",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "key",
+                                                        "type": "text",
+                                                        "label": "Key",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "upsert",
+                                                        "type": "boolean",
+                                                        "label": "Insert missing record",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "overwriteArrays",
+                                                        "type": "boolean",
+                                                        "label": "Overwrite an existing array in the record",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "data",
+                                                        "spec": [
+                                                            {
+                                                                "name": "key",
+                                                                "type": "text",
+                                                                "label": null
+                                                            },
+                                                            {
+                                                                "name": "conversation_history",
+                                                                "type": "text",
+                                                                "label": null
+                                                            },
+                                                            {
+                                                                "name": "timestamp",
+                                                                "type": "date",
+                                                                "label": null
+                                                            },
+                                                            {
+                                                                "name": "current_workflow_id",
+                                                                "type": "text",
+                                                                "label": null
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Record"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 60,
+                                            "module": "telegram:SendReplyMessage",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 13375602
+                                            },
+                                            "mapper": {
+                                                "text": "{{12.reply_text}}",
+                                                "chatId": "{{84.message.chat.id}}",
+                                                "parseMode": "",
+                                                "replyMarkup": "",
+                                                "messageThreadId": "",
+                                                "replyToMessageId": "",
+                                                "replyMarkupAssembleType": "reply_markup_enter"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2400,
+                                                    "y": 900
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "parseMode": {
+                                                            "label": "Empty"
+                                                        },
+                                                        "disableNotification": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "replyMarkupAssembleType": {
+                                                            "label": "Enter the Reply Markup"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "telegram"
+                                                            },
+                                                            "label": "creat workflow telegram bot"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 70,
+                            "module": "datastore:SearchRecord",
+                            "version": 1,
+                            "parameters": {
+                                "limit": 1,
+                                "datastore": 141391,
+                                "continueWhenNoRes": true
+                            },
+                            "filter": {
+                                "name": "File Upload Path",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{84.message.document}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "sort": [
+                                    {
+                                        "key": "timestamp",
+                                        "order": -1
+                                    }
+                                ],
+                                "filter": [
+                                    [
+                                        {
+                                            "a": "key",
+                                            "b": "{{84.message.chat.id}}",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ],
+                                "mappAbleLimit": ""
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 645,
+                                    "y": 1086
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "sort": {
+                                            "items": [
+                                                {
+                                                    "key": {
+                                                        "mode": "chose",
+                                                        "label": "timestamp"
+                                                    },
+                                                    "order": {
+                                                        "mode": "chose",
+                                                        "label": "Descending"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "datastore": {
+                                            "label": "TELEGRAM BOT"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "datastore",
+                                        "type": "datastore",
+                                        "label": "Data store",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "continueWhenNoRes",
+                                        "type": "boolean",
+                                        "label": "Continue the execution of the route even if the module returns no results"
+                                    },
+                                    {
+                                        "name": "limit",
+                                        "type": "uinteger",
+                                        "label": "Limit"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "filter",
+                                        "type": "filter",
+                                        "label": "Filter",
+                                        "options": "rpc://datastore/1.12.1/RpcGetUDTKeys",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "sort",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "select",
+                                                "label": "Key",
+                                                "dynamic": true,
+                                                "options": [],
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "order",
+                                                "type": "select",
+                                                "label": "Order",
+                                                "options": [
+                                                    {
+                                                        "label": "Ascending",
+                                                        "value": 1
+                                                    },
+                                                    {
+                                                        "label": "Descending",
+                                                        "value": -1
+                                                    }
+                                                ],
+                                                "required": true
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Sort"
+                                    },
+                                    {
+                                        "name": "mappAbleLimit",
+                                        "type": "uinteger",
+                                        "label": "Mappable Limit"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 85,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1086
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 71,
+                                            "module": "telegram:DownloadFile",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 13375602
+                                            },
+                                            "filter": {
+                                                "name": "✅ Workflow ID Exists",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{70.data.current_workflow_id}}",
+                                                            "o": "exist"
+                                                        },
+                                                        {
+                                                            "a": "{{length(70.data.current_workflow_id)}}",
+                                                            "b": "0",
+                                                            "o": "number:greater"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "fileId": "{{84.message.document.file_id}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 1000
+                                                },
+                                                "restore": {
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "label": "creat workflow telegram bot",
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "telegram"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "__IMTCONN__",
+                                                        "type": "account:telegram",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "fileId",
+                                                        "type": "text",
+                                                        "label": "File ID",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 83,
+                                            "module": "surense:createDocument",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 10986761
+                                            },
+                                            "mapper": {
+                                                "id": "{{70.data.current_workflow_id}}",
+                                                "data": "{{71.fileOutput}}",
+                                                "idType": "wid",
+                                                "filename": "{{71.fileName}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 1000
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "idType": {
+                                                            "mode": "chose",
+                                                            "label": "תהליך"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "surense"
+                                                            },
+                                                            "label": "My Surense connection (barakoh111@gmail.com)"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": 86,
+                                            "module": "datastore:UpdateRecord",
+                                            "version": 1,
+                                            "parameters": {
+                                                "datastore": 141391
+                                            },
+                                            "mapper": {
+                                                "key": "{{84.message.chat.id}}",
+                                                "data": {
+                                                    "key": "{{70.data.key}}",
+                                                    "timestamp": "{{now}}",
+                                                    "current_workflow_id": "{{70.data.current_workflow_id}}",
+                                                    "conversation_history": "{{70.data.conversation_history}}{{newline}}user: [העלה קובץ: {{71.fileName}}]{{newline}}assistant: הקובץ {{71.fileName}} הועלה בהצלחה לתהליך!"
+                                                },
+                                                "upsert": true,
+                                                "overwriteArrays": false
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1800,
+                                                    "y": 1000
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "upsert": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "overwriteArrays": {
+                                                            "mode": "chose"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "datastore": {
+                                                            "label": "TELEGRAM BOT"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "datastore",
+                                                        "type": "datastore",
+                                                        "label": "Data store",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "key",
+                                                        "type": "text",
+                                                        "label": "Key",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "upsert",
+                                                        "type": "boolean",
+                                                        "label": "Insert missing record",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "overwriteArrays",
+                                                        "type": "boolean",
+                                                        "label": "Overwrite an existing array in the record",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "data",
+                                                        "type": "collection",
+                                                        "label": "Record",
+                                                        "spec": [
+                                                            {
+                                                                "name": "key",
+                                                                "type": "text",
+                                                                "label": null
+                                                            },
+                                                            {
+                                                                "name": "conversation_history",
+                                                                "type": "text",
+                                                                "label": null
+                                                            },
+                                                            {
+                                                                "name": "timestamp",
+                                                                "type": "date",
+                                                                "label": null
+                                                            },
+                                                            {
+                                                                "name": "current_workflow_id",
+                                                                "type": "text",
+                                                                "label": null
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 87,
+                                            "module": "telegram:SendReplyMessage",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 13375602
+                                            },
+                                            "mapper": {
+                                                "text": "✅ הקובץ הועלה בהצלחה!\n\n📎 שם הקובץ: {{71.fileName}}\n📋 תהליך: {{70.data.current_workflow_id}}\n\nאפשר להעלות קבצים נוספים או לכתוב הוראה חדשה.",
+                                                "chatId": "{{84.message.chat.id}}",
+                                                "parseMode": "",
+                                                "replyMarkup": "",
+                                                "messageThreadId": "",
+                                                "replyToMessageId": "",
+                                                "replyMarkupAssembleType": "reply_markup_enter"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 2100,
+                                                    "y": 1000
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "parseMode": {
+                                                            "label": "Empty"
+                                                        },
+                                                        "disableNotification": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "replyMarkupAssembleType": {
+                                                            "label": "Enter the Reply Markup"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "telegram"
+                                                            },
+                                                            "label": "creat workflow telegram bot"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 88,
+                                            "module": "telegram:SendReplyMessage",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 13375602
+                                            },
+                                            "filter": {
+                                                "name": "❌ No Workflow ID",
+                                                "conditions": []
+                                            },
+                                            "mapper": {
+                                                "text": "❌ לא ניתן להעלות קובץ!\n\n🚫 אין תהליך פעיל כרגע.\n\n💡 קודם צור תהליך חדש, ואז תוכל לצרף קבצים.\n\nדוגמה:\n\"צור תהליך של שינוי מסלול בפניקס עבור משה כהן\"",
+                                                "chatId": "{{84.message.chat.id}}",
+                                                "parseMode": "",
+                                                "replyMarkup": "",
+                                                "messageThreadId": "",
+                                                "replyToMessageId": "",
+                                                "replyMarkupAssembleType": "reply_markup_enter"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 1300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "parseMode": {
+                                                            "label": "Empty"
+                                                        },
+                                                        "disableNotification": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "replyMarkupAssembleType": {
+                                                            "label": "Enter the Reply Markup"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "__IMTCONN__": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "telegram"
+                                                            },
+                                                            "label": "creat workflow telegram bot"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu2.make.com",
+        "notes": []
+    }
+}
