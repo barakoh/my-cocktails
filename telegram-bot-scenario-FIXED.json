@@ -1640,138 +1640,18 @@
                     ]
                 },
                 {
+                    "filter": {
+                        "name": "File Upload Path",
+                        "conditions": [
+                            [
+                                {
+                                    "a": "{{84.message.document}}",
+                                    "o": "exist"
+                                }
+                            ]
+                        ]
+                    },
                     "flow": [
-                        {
-                            "id": 70,
-                            "module": "datastore:SearchRecord",
-                            "version": 1,
-                            "parameters": {
-                                "limit": 1,
-                                "datastore": 141391,
-                                "continueWhenNoRes": true
-                            },
-                            "filter": {
-                                "name": "File Upload Path",
-                                "conditions": [
-                                    [
-                                        {
-                                            "a": "{{84.message.document}}",
-                                            "o": "exist"
-                                        }
-                                    ]
-                                ]
-                            },
-                            "mapper": {
-                                "sort": [
-                                    {
-                                        "key": "timestamp",
-                                        "order": -1
-                                    }
-                                ],
-                                "filter": [
-                                    [
-                                        {
-                                            "a": "key",
-                                            "b": "{{84.message.chat.id}}",
-                                            "o": "text:equal"
-                                        }
-                                    ]
-                                ],
-                                "mappAbleLimit": ""
-                            },
-                            "metadata": {
-                                "designer": {
-                                    "x": 645,
-                                    "y": 1086
-                                },
-                                "restore": {
-                                    "expect": {
-                                        "sort": {
-                                            "items": [
-                                                {
-                                                    "key": {
-                                                        "mode": "chose",
-                                                        "label": "timestamp"
-                                                    },
-                                                    "order": {
-                                                        "mode": "chose",
-                                                        "label": "Descending"
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "parameters": {
-                                        "datastore": {
-                                            "label": "TELEGRAM BOT"
-                                        }
-                                    }
-                                },
-                                "parameters": [
-                                    {
-                                        "name": "datastore",
-                                        "type": "datastore",
-                                        "label": "Data store",
-                                        "required": true
-                                    },
-                                    {
-                                        "name": "continueWhenNoRes",
-                                        "type": "boolean",
-                                        "label": "Continue the execution of the route even if the module returns no results"
-                                    },
-                                    {
-                                        "name": "limit",
-                                        "type": "uinteger",
-                                        "label": "Limit"
-                                    }
-                                ],
-                                "expect": [
-                                    {
-                                        "name": "filter",
-                                        "type": "filter",
-                                        "label": "Filter",
-                                        "options": "rpc://datastore/1.12.1/RpcGetUDTKeys",
-                                        "required": true
-                                    },
-                                    {
-                                        "name": "sort",
-                                        "spec": [
-                                            {
-                                                "name": "key",
-                                                "type": "select",
-                                                "label": "Key",
-                                                "dynamic": true,
-                                                "options": [],
-                                                "required": true
-                                            },
-                                            {
-                                                "name": "order",
-                                                "type": "select",
-                                                "label": "Order",
-                                                "options": [
-                                                    {
-                                                        "label": "Ascending",
-                                                        "value": 1
-                                                    },
-                                                    {
-                                                        "label": "Descending",
-                                                        "value": -1
-                                                    }
-                                                ],
-                                                "required": true
-                                            }
-                                        ],
-                                        "type": "array",
-                                        "label": "Sort"
-                                    },
-                                    {
-                                        "name": "mappAbleLimit",
-                                        "type": "uinteger",
-                                        "label": "Mappable Limit"
-                                    }
-                                ]
-                            }
-                        },
                         {
                             "id": 85,
                             "module": "builtin:BasicRouter",
@@ -1798,11 +1678,11 @@
                                                 "conditions": [
                                                     [
                                                         {
-                                                            "a": "{{70.data.current_workflow_id}}",
+                                                            "a": "{{2.data.current_workflow_id}}",
                                                             "o": "exist"
                                                         },
                                                         {
-                                                            "a": "{{length(70.data.current_workflow_id)}}",
+                                                            "a": "{{length(2.data.current_workflow_id)}}",
                                                             "b": "0",
                                                             "o": "number:greater"
                                                         }
@@ -1854,7 +1734,7 @@
                                                 "__IMTCONN__": 10986761
                                             },
                                             "mapper": {
-                                                "id": "{{70.data.current_workflow_id}}",
+                                                "id": "{{2.data.current_workflow_id}}",
                                                 "data": "{{71.fileOutput}}",
                                                 "idType": "wid",
                                                 "filename": "{{71.fileName}}"
@@ -1893,10 +1773,10 @@
                                             "mapper": {
                                                 "key": "{{84.message.chat.id}}",
                                                 "data": {
-                                                    "key": "{{70.data.key}}",
+                                                    "key": "{{2.data.key}}",
                                                     "timestamp": "{{now}}",
-                                                    "current_workflow_id": "{{70.data.current_workflow_id}}",
-                                                    "conversation_history": "{{70.data.conversation_history}}{{newline}}user: [העלה קובץ: {{71.fileName}}]{{newline}}assistant: הקובץ {{71.fileName}} הועלה בהצלחה לתהליך!"
+                                                    "current_workflow_id": "{{2.data.current_workflow_id}}",
+                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}user: [העלה קובץ: {{71.fileName}}]{{newline}}assistant: הקובץ {{71.fileName}} הועלה בהצלחה לתהליך!"
                                                 },
                                                 "upsert": true,
                                                 "overwriteArrays": false
@@ -1986,7 +1866,7 @@
                                                 "__IMTCONN__": 13375602
                                             },
                                             "mapper": {
-                                                "text": "✅ הקובץ הועלה בהצלחה!\n\n📎 שם הקובץ: {{71.fileName}}\n📋 תהליך: {{70.data.current_workflow_id}}\n\nאפשר להעלות קבצים נוספים או לכתוב הוראה חדשה.",
+                                                "text": "✅ הקובץ הועלה בהצלחה!\n\n📎 שם הקובץ: {{71.fileName}}\n📋 תהליך: {{2.data.current_workflow_id}}\n\nאפשר להעלות קבצים נוספים או לכתוב הוראה חדשה.",
                                                 "chatId": "{{84.message.chat.id}}",
                                                 "parseMode": "",
                                                 "replyMarkup": "",
