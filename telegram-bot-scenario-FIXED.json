@@ -239,14 +239,11 @@
                 {
                     "flow": [
                         {
-                            "id": 10,
-                            "module": "datastore:UpdateRecord",
+                            "id": 9,
+                            "module": "builtin:BasicRouter",
                             "version": 1,
-                            "parameters": {
-                                "datastore": 141391
-                            },
                             "filter": {
-                                "name": "Text Message Only",
+                                "name": "Text or Voice Message Only",
                                 "conditions": [
                                     [
                                         {
@@ -256,13 +253,85 @@
                                     ]
                                 ]
                             },
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 700,
+                                    "y": 450
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 88,
+                                            "module": "telegram:DownloadFile",
+                                            "version": 1,
+                                            "filter": {
+                                                "name": "Voice Message",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{84.message.voice}}",
+                                                            "o": "exist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "parameters": {
+                                                "__IMTCONN__": 13375602
+                                            },
+                                            "mapper": {
+                                                "fileId": "{{84.message.voice.file_id}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 900,
+                                                    "y": 350
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": 89,
+                                            "module": "openai:transcribeAudio",
+                                            "version": 1,
+                                            "parameters": {
+                                                "__IMTCONN__": 0
+                                            },
+                                            "mapper": {
+                                                "file": "{{88.fileOutput}}",
+                                                "model": "whisper-1",
+                                                "language": "he",
+                                                "response_format": "json"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1100,
+                                                    "y": 350
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": 10,
+                            "module": "datastore:UpdateRecord",
+                            "version": 1,
+                            "parameters": {
+                                "datastore": 141391
+                            },
                             "mapper": {
                                 "key": "{{84.message.chat.id}}",
                                 "data": {
                                     "key": "{{2.data.key}}",
                                     "timestamp": "{{2.data.timestamp}}",
                                     "current_workflow_id": "{{2.data.current_workflow_id}}",
-                                    "conversation_history": "{{if(2.data.conversation_history; 2.data.conversation_history + newline + \"user: \" + 84.message.text; \"user: \" + 84.message.text)}}"
+                                    "conversation_history": "{{if(2.data.conversation_history; 2.data.conversation_history + newline + \"user: \" + if(89.text; 89.text; 84.message.text); \"user: \" + if(89.text; 89.text; 84.message.text))}}"
                                 },
                                 "upsert": true,
                                 "overwriteArrays": false
@@ -358,7 +427,7 @@
                                         "role": "user",
                                         "parts": [
                                             {
-                                                "text": "היסטוריית שיחה (20 הודעות אחרונות):\n{{join(last(split(10.data.conversation_history; newline); 20); newline)}}\n\nהודעה נוכחית:\n{{84.message.text}}",
+                                                "text": "היסטוריית שיחה (20 הודעות אחרונות):\n{{join(last(split(10.data.conversation_history; newline); 20); newline)}}\n\nהודעה נוכחית:\n{{if(89.text; 89.text; 84.message.text)}}",
                                                 "type": "text"
                                             }
                                         ]
