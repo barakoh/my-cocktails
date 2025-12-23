@@ -358,7 +358,7 @@
                                         "role": "user",
                                         "parts": [
                                             {
-                                                "text": "היסטוריית שיחה:{{2.data.conversation_history}}\nהודעה נוכחית:\n{{84.message.text}}",
+                                                "text": "היסטוריית שיחה:{{10.data.conversation_history}}\nהודעה נוכחית:\n{{84.message.text}}",
                                                 "type": "text"
                                             }
                                         ]
@@ -850,7 +850,7 @@
                                                                                     "key": "{{2.data.key}}",
                                                                                     "timestamp": "{{2.data.timestamp}}",
                                                                                     "current_workflow_id": "{{2.data.current_workflow_id}}",
-                                                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: {{12.reply_text}}"
+                                                                                    "conversation_history": "{{10.data.conversation_history}}{{newline}}assistant: {{12.reply_text}}"
                                                                                 },
                                                                                 "upsert": true,
                                                                                 "overwriteArrays": false
@@ -1130,7 +1130,7 @@
                                                                                                 "data": {
                                                                                                     "key": "{{2.data.key}}",
                                                                                                     "timestamp": "{{2.data.timestamp}}",
-                                                                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: התהליך נוצר בהצלחה! יש קבצים שתרצה לצרף?",
+                                                                                                    "conversation_history": "{{10.data.conversation_history}}{{newline}}assistant: התהליך נוצר בהצלחה! יש קבצים שתרצה לצרף?",
                                                                                                     "current_workflow_id": "{{75.body.id}}"
                                                                                                 }
                                                                                             },
@@ -1277,7 +1277,7 @@
                                                                                                     "key": "{{2.data.key}}",
                                                                                                     "timestamp": "{{2.data.timestamp}}",
                                                                                                     "current_workflow_id": "{{2.data.current_workflow_id}}",
-                                                                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: לא מצאתי התאמה לשם הלקוח. אפשר לנסח אחרת?"
+                                                                                                    "conversation_history": "{{10.data.conversation_history}}{{newline}}assistant: לא מצאתי התאמה לשם הלקוח. אפשר לנסח אחרת?"
                                                                                                 },
                                                                                                 "upsert": true,
                                                                                                 "overwriteArrays": false
@@ -1506,7 +1506,7 @@
                                                     "key": "{{2.data.key}}",
                                                     "timestamp": "{{2.data.timestamp}}",
                                                     "current_workflow_id": "{{2.data.current_workflow_id}}",
-                                                    "conversation_history": "{{2.data.conversation_history}}{{newline}}assistant: {{12.reply_text}}"
+                                                    "conversation_history": "{{10.data.conversation_history}}{{newline}}assistant: {{12.reply_text}}"
                                                 },
                                                 "upsert": true,
                                                 "overwriteArrays": false
