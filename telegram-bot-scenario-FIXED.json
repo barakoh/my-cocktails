@@ -1075,7 +1075,7 @@
                                                                                             },
                                                                                             "mapper": {
                                                                                                 "url": "workflows/{{75.body.id}}",
-                                                                                                "body": "{\r\n  \"newCompanyId\": {{get(32.array; 1).companyId}},\r\n  \"newProductType\": {{get(32.array; 1).productType.code}}\r\n}",
+                                                                                                "body": "{\r\n  \"newCompanyId\": {{32.array[].companyId}},\r\n  \"newProductType\": {{32.array[].productType.code}}\r\n}",
                                                                                                 "method": "PATCH",
                                                                                                 "headers": [
                                                                                                     {
