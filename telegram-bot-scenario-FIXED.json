@@ -1130,7 +1130,7 @@
                                                                                                 "data": {
                                                                                                     "key": "{{2.data.key}}",
                                                                                                     "timestamp": "{{2.data.timestamp}}",
-                                                                                                    "conversation_history": "{{10.data.conversation_history}}{{newline}}assistant: התהליך נוצר בהצלחה! יש קבצים שתרצה לצרף?",
+                                                                                                    "conversation_history": "{{40.data.conversation_history}}{{newline}}assistant: התהליך נוצר בהצלחה! יש קבצים שתרצה לצרף?",
                                                                                                     "current_workflow_id": "{{75.body.id}}"
                                                                                                 }
                                                                                             },
