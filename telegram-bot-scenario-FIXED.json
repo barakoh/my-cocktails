@@ -239,84 +239,63 @@
                 {
                     "flow": [
                         {
-                            "id": 9,
-                            "module": "builtin:BasicRouter",
+                            "id": 88,
+                            "module": "telegram:DownloadFile",
                             "version": 1,
                             "filter": {
-                                "name": "Text or Voice Message Only",
+                                "name": "Voice Message",
                                 "conditions": [
                                     [
                                         {
-                                            "a": "{{84.message.document}}",
-                                            "o": "notexist"
+                                            "a": "{{84.message.voice}}",
+                                            "o": "exist"
                                         }
                                     ]
                                 ]
                             },
-                            "mapper": null,
+                            "parameters": {
+                                "__IMTCONN__": 13375602
+                            },
+                            "mapper": {
+                                "fileId": "{{84.message.voice.file_id}}"
+                            },
                             "metadata": {
                                 "designer": {
                                     "x": 700,
-                                    "y": 450
+                                    "y": 350
                                 }
-                            },
-                            "routes": [
-                                {
-                                    "flow": [
+                            }
+                        },
+                        {
+                            "id": 89,
+                            "module": "openai:transcribeAudio",
+                            "version": 1,
+                            "filter": {
+                                "name": "Voice Message",
+                                "conditions": [
+                                    [
                                         {
-                                            "id": 88,
-                                            "module": "telegram:DownloadFile",
-                                            "version": 1,
-                                            "filter": {
-                                                "name": "Voice Message",
-                                                "conditions": [
-                                                    [
-                                                        {
-                                                            "a": "{{84.message.voice}}",
-                                                            "o": "exist"
-                                                        }
-                                                    ]
-                                                ]
-                                            },
-                                            "parameters": {
-                                                "__IMTCONN__": 13375602
-                                            },
-                                            "mapper": {
-                                                "fileId": "{{84.message.voice.file_id}}"
-                                            },
-                                            "metadata": {
-                                                "designer": {
-                                                    "x": 900,
-                                                    "y": 350
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "id": 89,
-                                            "module": "openai:transcribeAudio",
-                                            "version": 1,
-                                            "parameters": {
-                                                "__IMTCONN__": 0
-                                            },
-                                            "mapper": {
-                                                "file": "{{88.fileOutput}}",
-                                                "model": "whisper-1",
-                                                "language": "he",
-                                                "response_format": "json"
-                                            },
-                                            "metadata": {
-                                                "designer": {
-                                                    "x": 1100,
-                                                    "y": 350
-                                                }
-                                            }
+                                            "a": "{{84.message.voice}}",
+                                            "o": "exist"
                                         }
                                     ]
-                                },
-                                {
-                                    "flow": []
+                                ]
+                            },
+                            "parameters": {
+                                "__IMTCONN__": 0
+                            },
+                            "mapper": {
+                                "file": "{{88.fileOutput}}",
+                                "model": "whisper-1",
+                                "language": "he",
+                                "response_format": "json"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 350
                                 }
-                            ]
+                            }
                         },
                         {
                             "id": 10,
