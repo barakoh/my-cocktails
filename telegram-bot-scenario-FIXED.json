@@ -937,7 +937,8 @@
                                                                             "module": "surense:SearchCustomers",
                                                                             "version": 1,
                                                                             "parameters": {
-                                                                                "__IMTCONN__": 10986761
+                                                                                "__IMTCONN__": 10986761,
+                                                                                "continueWhenNoRes": true
                                                                             },
                                                                             "mapper": {
                                                                                 "limit": "1",
@@ -1074,7 +1075,7 @@
                                                                                             },
                                                                                             "mapper": {
                                                                                                 "url": "workflows/{{75.body.id}}",
-                                                                                                "body": "{\r\n  \"newCompanyId\": {{32.array[].companyId}},\r\n  \"newProductType\": {{32.array[].productType.code}}\r\n}",
+                                                                                                "body": "{\r\n  \"newCompanyId\": {{first(32.array).companyId}},\r\n  \"newProductType\": {{first(32.array).productType.code}}\r\n}",
                                                                                                 "method": "PATCH",
                                                                                                 "headers": [
                                                                                                     {
