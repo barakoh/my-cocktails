@@ -237,6 +237,17 @@
             },
             "routes": [
                 {
+                    "filter": {
+                        "name": "Text or Voice Message (Not Document)",
+                        "conditions": [
+                            [
+                                {
+                                    "a": "{{84.message.document}}",
+                                    "o": "notexist"
+                                }
+                            ]
+                        ]
+                    },
                     "flow": [
                         {
                             "id": 88,
